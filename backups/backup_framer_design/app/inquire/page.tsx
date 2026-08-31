@@ -1,5 +1,3 @@
-import StyledIMowiT from "@/components/StyledIMowiT"
-
 export default function Inquire() {
   return (
     <div className="py-16 lg:py-24">
@@ -8,7 +6,7 @@ export default function Inquire() {
           Get In Touch
         </h1>
         <p className="text-center text-gray-600 mb-12 text-lg">
-          Interested in <StyledIMowiT /> autonomous mowing services? We'd love to hear from you.
+          Interested in iMowiT autonomous mowing services? We'd love to hear from you.
         </p>
 
         <form className="space-y-6">

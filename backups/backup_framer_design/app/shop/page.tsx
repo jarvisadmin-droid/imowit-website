@@ -1,6 +1,3 @@
-import StyledIMowiT from "@/components/StyledIMowiT"
-import Image from "next/image"
-
 export default function Shop() {
   return (
     <div className="py-16 lg:py-24">
@@ -15,56 +12,38 @@ export default function Shop() {
         <div className="grid md:grid-cols-3 gap-8">
           {/* Placeholder Products */}
           <div className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-            <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-              <Image
-                src="/imow-pro-mower.png"
-                alt="iMowiT Pro Mower"
-                width={300}
-                height={200}
-                className="w-full h-full object-cover"
-              />
+            <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center">
+              <span className="text-gray-500">Product Image</span>
             </div>
-            <h3 className="text-xl font-semibold text-[#001F51] mb-2"><StyledIMowiT /> Pro Mower</h3>
+            <h3 className="text-xl font-semibold text-[#001F51] mb-2">iMowiT Pro Mower</h3>
             <p className="text-gray-600 mb-4">Advanced autonomous mower for residential lawns up to 1 acre.</p>
             <p className="text-2xl font-bold text-[#56C70B] mb-4">$2,499</p>
             <button className="w-full bg-[#001F51] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#001a40] transition-colors">
-              Add to Cart
+              Learn More
             </button>
           </div>
 
           <div className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-            <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-              <Image
-                src="/imow-lite-mower.png"
-                alt="iMowiT Lite Mower"
-                width={300}
-                height={200}
-                className="w-full h-full object-cover"
-              />
+            <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center">
+              <span className="text-gray-500">Product Image</span>
             </div>
-            <h3 className="text-xl font-semibold text-[#001F51] mb-2"><StyledIMowiT /> Lite Mower</h3>
+            <h3 className="text-xl font-semibold text-[#001F51] mb-2">iMowiT Lite Mower</h3>
             <p className="text-gray-600 mb-4">Perfect for smaller residential lawns up to 0.5 acres.</p>
             <p className="text-2xl font-bold text-[#56C70B] mb-4">$1,499</p>
             <button className="w-full bg-[#001F51] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#001a40] transition-colors">
-              Add to Cart
+              Learn More
             </button>
           </div>
 
           <div className="border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow">
-            <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-              <Image
-                src="/imow-slope-mower.png"
-                alt="iMowiT Slope Mower"
-                width={300}
-                height={200}
-                className="w-full h-full object-cover"
-              />
+            <div className="bg-gray-200 h-48 rounded-lg mb-4 flex items-center justify-center">
+              <span className="text-gray-500">Accessory</span>
             </div>
-            <h3 className="text-xl font-semibold text-[#001F51] mb-2">Slope Mower</h3>
-            <p className="text-gray-600 mb-4">Cuts up to 70% Slopes (AWD)</p>
-            <p className="text-2xl font-bold text-[#56C70B] mb-4">$4,999.99</p>
+            <h3 className="text-xl font-semibold text-[#001F51] mb-2">Charging Station</h3>
+            <p className="text-gray-600 mb-4">Quick-install charging station for your autonomous mower.</p>
+            <p className="text-2xl font-bold text-[#56C70B] mb-4">$299</p>
             <button className="w-full bg-[#001F51] text-white px-6 py-2 rounded-lg font-medium hover:bg-[#001a40] transition-colors">
-              Add to Cart
+              Learn More
             </button>
           </div>
         </div>

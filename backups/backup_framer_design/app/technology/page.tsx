@@ -1,6 +1,3 @@
-import StyledIMowiT from "@/components/StyledIMowiT"
-import Image from "next/image"
-
 export default function Technology() {
   return (
     <div className="py-16 lg:py-24">
@@ -11,9 +8,6 @@ export default function Technology() {
         <p className="text-center text-gray-600 mb-16 text-lg max-w-3xl mx-auto">
           Cutting-edge autonomous mowing technology designed for reliability, efficiency, and precision.
         </p>
-
-        {/* Navy Blue Divider Line */}
-        <div className="w-full h-1 bg-[#001F51] mb-16"></div>
 
         {/* Technology Features */}
         <div className="space-y-16">
@@ -26,14 +20,8 @@ export default function Technology() {
                 ensuring every inch is mowed efficiently without missing spots or overlapping.
               </p>
             </div>
-            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center overflow-hidden">
-              <Image
-                src="/gps-navigation.png"
-                alt="GPS-Guided Navigation"
-                width={600}
-                height={400}
-                className="w-full h-full object-cover"
-              />
+            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+              <span className="text-gray-500">GPS Navigation Graphic</span>
             </div>
           </div>
 
@@ -46,14 +34,8 @@ export default function Technology() {
                 and furniture. Rain sensors automatically return the mower to base when weather changes.
               </p>
             </div>
-            <div className="order-1 md:order-2 bg-gray-200 h-64 rounded-lg flex items-center justify-center overflow-hidden">
-              <Image
-                src="/smart-sensors.png"
-                alt="Smart Sensors"
-                width={600}
-                height={400}
-                className="w-full h-full object-cover"
-              />
+            <div className="order-1 md:order-2 bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+              <span className="text-gray-500">Sensors Graphic</span>
             </div>
           </div>
 
@@ -66,14 +48,8 @@ export default function Technology() {
                 Schedule mowing times, track progress, and receive notifications.
               </p>
             </div>
-            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center overflow-hidden">
-              <Image
-                src="/app-control.png"
-                alt="App Control"
-                width={600}
-                height={400}
-                className="w-full h-full object-cover"
-              />
+            <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+              <span className="text-gray-500">App Interface Graphic</span>
             </div>
           </div>
 
@@ -82,18 +58,12 @@ export default function Technology() {
             <div className="order-2 md:order-1">
               <h2 className="text-2xl font-bold text-[#001F51] mb-4">Eco-Friendly Design</h2>
               <p className="text-gray-600 text-lg">
-                All <StyledIMowiT /> mowers are fully electric, producing zero direct emissions. 
+                All iMowiT mowers are fully electric, producing zero direct emissions. 
                 They operate at whisper-quiet levels, so you can mow any time without disturbing neighbors.
               </p>
             </div>
-            <div className="order-1 md:order-2 bg-gray-200 h-64 rounded-lg flex items-center justify-center overflow-hidden">
-              <Image
-                src="/eco-friendly.png"
-                alt="Eco-Friendly Design"
-                width={600}
-                height={400}
-                className="w-full h-full object-cover"
-              />
+            <div className="order-1 md:order-2 bg-gray-200 h-64 rounded-lg flex items-center justify-center">
+              <span className="text-gray-500">Eco Design Graphic</span>
             </div>
           </div>
         </div>

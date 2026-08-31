@@ -1,5 +1,3 @@
-import StyledIMowiT from "@/components/StyledIMowiT"
-
 export default function Subcontractors() {
   return (
     <div className="py-16 lg:py-24">
@@ -8,7 +6,7 @@ export default function Subcontractors() {
           Become a Subcontractor
         </h1>
         <p className="text-center text-gray-600 mb-12 text-lg max-w-3xl mx-auto">
-          Join the <StyledIMowiT /> network of independent contractors and grow your business with autonomous mowing technology.
+          Join the iMowiT network of independent contractors and grow your business with autonomous mowing technology.
         </p>
 
         {/* Benefits */}
