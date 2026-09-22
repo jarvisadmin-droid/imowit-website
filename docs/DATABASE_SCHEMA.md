@@ -2,7 +2,7 @@
 
 Source of truth: `supabase/migrations/`. This document explains what's there and why. If the two ever disagree, the migrations win — update this doc to match.
 
-**Status:** all 15 migrations applied to the **iMowiT-Dev** Supabase project (2026-09-22). RLS confirmed enabled on all 28 public tables. Production project not yet created — see [README.md](../README.md#supabase-backend).
+**Status:** all 16 migrations applied to the **iMowiT-Dev** Supabase project (2026-09-22). RLS confirmed enabled on all 28 public tables. Production project not yet created — see [README.md](../README.md#supabase-backend).
 
 ## Relationship diagram
 
@@ -49,7 +49,7 @@ audit_logs                                      → populated by triggers on the
 
 | Table | Purpose |
 |---|---|
-| `profiles` | 1:1 shadow of `auth.users`, created automatically by a trigger on signup. Base identity every role hangs off of. |
+| `profiles` | 1:1 shadow of `auth.users`, created automatically by a trigger on signup. Base identity every role hangs off of. Also holds per-channel marketing consent: `marketing_email_opt_in` / `marketing_push_opt_in` (boolean, default `false`) with `marketing_email_opt_in_at` / `marketing_push_opt_in_at` (nullable `timestamptz`, when the opt-in was given). The `*_at` columns are set only by the `profiles_set_marketing_opt_in_timestamps` trigger — stamped on opt-in, cleared on opt-out, and any client-supplied value is ignored. |
 | `admin_accounts` | Internal staff, with `admin_role` (`super_admin`, `support`, `operations`, `finance`). |
 | `organizations` | One HOA or property-management company: one name, one primary contact, one primary address. |
 | `customer_accounts` | `account_type` is `individual` or `organization`. `organization_id` is set only on the org's own billing account. `affiliated_organization_id` is a separate, optional tag any individual account can set to identify "which HOA I live in" — purely informational, no billing/approval/routing effect. |
@@ -143,7 +143,7 @@ RLS is enabled on **every** table. Approach:
 
 ## Generating types
 
-`src/types/database.types.ts` is hand-written to match these migrations. Once they're applied to a real project, regenerate it from the live schema so it never drifts:
+`src/types/database.types.ts` is generated from the live iMowiT-Dev schema. Regenerate it after applying any new migration so it never drifts:
 
 ```
 supabase gen types typescript --linked > src/types/database.types.ts
