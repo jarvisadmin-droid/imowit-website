@@ -2,6 +2,8 @@
 
 Source of truth: `supabase/migrations/`. This document explains what's there and why. If the two ever disagree, the migrations win — update this doc to match.
 
+**Status:** all 15 migrations applied to the **iMowiT-Dev** Supabase project (2026-09-22). RLS confirmed enabled on all 28 public tables. Production project not yet created — see [README.md](../README.md#supabase-backend).
+
 ## Relationship diagram
 
 ```

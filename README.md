@@ -34,3 +34,18 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Supabase (backend)
+
+Schema source of truth and full docs: [`docs/DATABASE_SCHEMA.md`](docs/DATABASE_SCHEMA.md).
+
+This repo's local project is linked to the **iMowiT-Dev** Supabase project (`supabase/.temp/project-ref`, gitignored — re-link with `supabase link --project-ref <ref>` if you clone fresh). Migrations live in `supabase/migrations/` and have been applied to that dev project.
+
+```bash
+npx supabase login                    # one-time, per machine
+npx supabase link --project-ref <ref> # one-time, per clone
+npx supabase db push --linked --dry-run  # preview pending migrations
+npx supabase db push --linked            # apply them
+```
+
+Production will use a separate Supabase project with its own credentials — never point local dev tooling at it.
