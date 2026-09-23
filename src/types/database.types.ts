@@ -1598,6 +1598,7 @@ export type Database = {
       generate_scheduled_work_orders: { Args: never; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
       is_contractor: { Args: never; Returns: boolean }
+      is_trusted_backend: { Args: never; Returns: boolean }
       owns_contractor_account: { Args: { target_id: string }; Returns: boolean }
       owns_customer_account: { Args: { target_id: string }; Returns: boolean }
     }

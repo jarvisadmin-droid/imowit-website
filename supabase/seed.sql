@@ -3,7 +3,9 @@
 
 -- ---------------------------------------------------------------------------
 -- auth.users (profiles are created automatically by the on_auth_user_created
--- trigger). This pattern — inserting directly into auth.users — is standard
+-- trigger, and -- because these users are inserted already confirmed -- an
+-- individual customer_accounts row is created by the on_auth_user_verified
+-- trigger for everyone without an app_metadata.staff_role). This pattern — inserting directly into auth.users — is standard
 -- for local Supabase CLI dev seeding (`supabase start` + `supabase db reset`)
 -- but is NOT how real users are created in the app (that goes through
 -- Supabase Auth sign-up). Password for every seed user below: "password123".
@@ -14,12 +16,12 @@ insert into auth.users (
   raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
   confirmation_token, email_change, email_change_token_new, recovery_token
 ) values
-  ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'admin@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Alex Admin"}', now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000001', 'authenticated', 'authenticated', 'admin@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"],"staff_role":"admin"}', '{"full_name":"Alex Admin"}', now(), now(), '', '', '', ''),
   ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000002', 'authenticated', 'authenticated', 'homeowner1@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Jamie Homeowner"}', now(), now(), '', '', '', ''),
   ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000003', 'authenticated', 'authenticated', 'homeowner2@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Sam Resident"}', now(), now(), '', '', '', ''),
   ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000004', 'authenticated', 'authenticated', 'hoa_manager@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Morgan Manager"}', now(), now(), '', '', '', ''),
-  ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', 'contractor1@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Casey Contractor"}', now(), now(), '', '', '', ''),
-  ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000006', 'authenticated', 'authenticated', 'contractor2@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"full_name":"Riley Rodriguez"}', now(), now(), '', '', '', '');
+  ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000005', 'authenticated', 'authenticated', 'contractor1@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"],"staff_role":"contractor"}', '{"full_name":"Casey Contractor"}', now(), now(), '', '', '', ''),
+  ('00000000-0000-0000-0000-000000000000', '10000000-0000-0000-0000-000000000006', 'authenticated', 'authenticated', 'contractor2@imowit.dev', crypt('password123', gen_salt('bf')), now(), '{"provider":"email","providers":["email"],"staff_role":"contractor"}', '{"full_name":"Riley Rodriguez"}', now(), now(), '', '', '', '');
 
 -- ---------------------------------------------------------------------------
 -- Organization (HOA)
@@ -35,16 +37,24 @@ values ('20000000-0000-0000-0000-000000000001', 'Maple Grove HOA', 'hoa', 'Morga
 insert into admin_accounts (profile_id, admin_role)
 values ('10000000-0000-0000-0000-000000000001', 'super_admin');
 
+-- The customer rows already exist (created by on_auth_user_verified), so
+-- these upserts pin the fixed ids the rest of the seed references and fill in
+-- the seed-specific fields.
 insert into customer_accounts (id, profile_id, account_type, billing_email)
 values
   ('30000000-0000-0000-0000-000000000001', '10000000-0000-0000-0000-000000000002', 'individual', 'homeowner1@imowit.dev'),
-  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000003', 'individual', 'homeowner2@imowit.dev');
+  ('30000000-0000-0000-0000-000000000002', '10000000-0000-0000-0000-000000000003', 'individual', 'homeowner2@imowit.dev')
+on conflict (profile_id) do update
+  set id = excluded.id, account_type = excluded.account_type, billing_email = excluded.billing_email;
 
 update customer_accounts set affiliated_organization_id = '20000000-0000-0000-0000-000000000001'
 where id = '30000000-0000-0000-0000-000000000002';
 
 insert into customer_accounts (id, profile_id, account_type, organization_id, billing_email)
-values ('30000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000004', 'organization', '20000000-0000-0000-0000-000000000001', 'hoa_manager@imowit.dev');
+values ('30000000-0000-0000-0000-000000000003', '10000000-0000-0000-0000-000000000004', 'organization', '20000000-0000-0000-0000-000000000001', 'hoa_manager@imowit.dev')
+on conflict (profile_id) do update
+  set id = excluded.id, account_type = excluded.account_type,
+      organization_id = excluded.organization_id, billing_email = excluded.billing_email;
 
 insert into contractor_accounts (id, profile_id, business_name, region)
 values
