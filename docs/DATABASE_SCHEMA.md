@@ -119,7 +119,7 @@ Reused across tables wherever the value set is genuinely identical (`account_sta
 
 ## Business logic: customer account on sign-up
 
-`on_auth_user_verified` (`20260922091800_create_customer_account_on_email_confirm.sql`) creates an `individual`, `active` `customer_accounts` row when a user's `email_confirmed_at` goes from null to set (or when a user is inserted already confirmed). It's idempotent on `profile_id`, so clients never need to create the row.
+`on_auth_user_verified` (`20260922091800_create_customer_account_on_email_confirm.sql`) creates an `individual`, `active` `customer_accounts` row when a user's `email_confirmed_at` goes from null to set (or when a user is inserted already confirmed). It's idempotent on `profile_id`, so clients never need to create the row. Clients also can't: `customer_accounts_insert` is `is_admin()` only (`20260922091900_customer_accounts_admin_only_insert.sql`). The trigger is security definer and the service role bypasses RLS, so both still insert.
 
 - **Staff are skipped.** Admins and contractors never self-sign-up: an admin creates them server-side (service role) with `app_metadata.staff_role` set to `'admin'` or `'contractor'`, then sends the invite. `app_metadata` is only writable by the service role, so users can't set it; `user_metadata` must never be used for this.
 - **Keyed on confirmation, not on insert,** so the staff role is guaranteed to be in place before the row is considered (the admin flow creates the user, then invites), and abandoned unconfirmed sign-ups don't become customers.
@@ -154,7 +154,6 @@ RLS is enabled on **every** table. Approach:
 
 **Pending / deferred:**
 
-- `customer_accounts_insert` still allows a customer to insert their own row (the mobile app did this before the confirmation trigger existed). Once the app stops inserting, restrict it to `is_admin()`.
 - HOA picker for profile settings (approved in principle): a security-definer search returning only `id, name` of active HOAs, minimum 3 characters, max 20 results, `authenticated` only. Build with the profile settings screen, together with a function returning the caller's own affiliated HOA name.
 - Two leftover dev accounts without a `customer_accounts` row are to be handled by hand.
 
