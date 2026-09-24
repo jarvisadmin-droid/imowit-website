@@ -103,6 +103,8 @@ audit_logs                                      → populated by triggers on the
 
 `complaints`, `messages`, `notifications` — straightforward, scoped to the profile/customer that owns them.
 
+`inquiries` (`20260924090000_inquiries.sql`) — messages from the public website's "Get In Touch" form (`/inquire`) and subcontractor application (`/subcontractors`), from visitors who aren't signed in. `inquiry_type` is `residential`/`commercial`/`subcontractor`/`partnership`/`other`; `status` is `new`/`read`/`archived`. Admins can read and update (RLS); nobody else can read, and there is **no insert policy**. Rows are created only by `submit_inquiry(...)`, a security-definer function that inserts one `new` row and returns its id. It enforces at most 5 inquiries per email address per hour (error hint `rate_limited`). It is granted to **`service_role` only**: every function is exposed through the Data API and the anon key is public, so granting it to `anon` would let anyone bypass the website's Cloudflare Turnstile check. The website's Server Action (`src/app/(marketing)/inquiry-actions.ts`) checks a honeypot field and Turnstile, validates, calls `submit_inquiry()` with the service role (`src/lib/supabase/service.ts`, server-only), then emails `admin@imowit.com` via Resend with Reply-To set to the visitor. The row is kept even if the email fails. Staff see inquiries in the admin dashboard at `/inquiries`.
+
 ### Audit
 
 `audit_logs` — populated by triggers (not written to directly) on `customer_accounts`, `contractor_accounts`, `admin_accounts`, `invoices`, `payments`, `work_orders`, and `job_assignments`.

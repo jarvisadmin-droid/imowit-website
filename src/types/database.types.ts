@@ -683,6 +683,54 @@ export type Database = {
           },
         ]
       }
+      inquiries: {
+        Row: {
+          created_at: string
+          email: string
+          experience: string | null
+          first_name: string
+          id: string
+          inquiry_type: Database["public"]["Enums"]["inquiry_type"]
+          last_name: string
+          message: string | null
+          phone: string | null
+          source_page: string
+          status: Database["public"]["Enums"]["inquiry_status"]
+          updated_at: string
+          zip_code: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          experience?: string | null
+          first_name: string
+          id?: string
+          inquiry_type: Database["public"]["Enums"]["inquiry_type"]
+          last_name: string
+          message?: string | null
+          phone?: string | null
+          source_page: string
+          status?: Database["public"]["Enums"]["inquiry_status"]
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          experience?: string | null
+          first_name?: string
+          id?: string
+          inquiry_type?: Database["public"]["Enums"]["inquiry_type"]
+          last_name?: string
+          message?: string | null
+          phone?: string | null
+          source_page?: string
+          status?: Database["public"]["Enums"]["inquiry_status"]
+          updated_at?: string
+          zip_code?: string | null
+        }
+        Relationships: []
+      }
       invoice_items: {
         Row: {
           amount: number | null
@@ -1634,6 +1682,20 @@ export type Database = {
           out_quote_request_id: string
         }[]
       }
+      submit_inquiry: {
+        Args: {
+          p_email: string
+          p_experience?: string
+          p_first_name: string
+          p_inquiry_type: Database["public"]["Enums"]["inquiry_type"]
+          p_last_name: string
+          p_message?: string
+          p_phone?: string
+          p_source_page: string
+          p_zip_code?: string
+        }
+        Returns: string
+      }
     }
     Enums: {
       account_status: "active" | "inactive" | "archived"
@@ -1663,6 +1725,13 @@ export type Database = {
         | "invoice"
         | "complaint"
         | "general"
+      inquiry_status: "new" | "read" | "archived"
+      inquiry_type:
+        | "residential"
+        | "commercial"
+        | "subcontractor"
+        | "partnership"
+        | "other"
       invoice_status: "draft" | "sent" | "paid" | "overdue" | "void"
       job_assignment_status: "assigned" | "accepted" | "declined" | "completed"
       job_update_type: "status_change" | "note" | "photo" | "issue"
@@ -1863,6 +1932,14 @@ export const Constants = {
         "invoice",
         "complaint",
         "general",
+      ],
+      inquiry_status: ["new", "read", "archived"],
+      inquiry_type: [
+        "residential",
+        "commercial",
+        "subcontractor",
+        "partnership",
+        "other",
       ],
       invoice_status: ["draft", "sent", "paid", "overdue", "void"],
       job_assignment_status: ["assigned", "accepted", "declined", "completed"],
