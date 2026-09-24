@@ -9,7 +9,7 @@ export default function Inquire() {
           Get In Touch
         </h1>
         <p className="text-center text-gray-600 mb-12 text-lg">
-          Interested in <StyledIMowiT /> autonomous mowing services? We&apos;d love to hear from you.
+          Interested in <StyledIMowiT />{" "}autonomous mowing services? We&apos;d love to hear from you.
         </p>
 
         <InquiryForm />
