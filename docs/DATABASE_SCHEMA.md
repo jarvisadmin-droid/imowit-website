@@ -160,6 +160,8 @@ RLS is enabled on **every** table. Approach:
 - **Phase 3:** the quote guard lets a customer set `accepted`/`declined` from any status, including `pending`. Restrict it to `sent → accepted | declined`.
 - **Before any document upload ships:** create private Storage buckets and `storage.objects` policies that mirror the fixed `documents` rules (org files gated by `organization_id` only, never affiliation). None exist yet.
 
+- **Before launch:** upgrade from the Google Cloud free trial to a full account and set per-API daily quota caps on Places API (New) and Maps Static API, plus a budget alert. Also set the Maps Static API **unsigned requests** quota to 0, so Google rejects requests that aren't URL-signed (the `satellite-image` function always signs, but until this quota is 0 a leaked key alone can still use Static Maps). The free trial doesn't allow editing quotas, so the `places-autocomplete`/`satellite-image` edge functions currently have no Google-side spending cap beyond the key's API restriction.
+
 **Pending / deferred:**
 
 - HOA picker for profile settings (approved in principle): a security-definer search returning only `id, name` of active HOAs, minimum 3 characters, max 20 results, `authenticated` only. Build with the profile settings screen, together with a function returning the caller's own affiliated HOA name.
