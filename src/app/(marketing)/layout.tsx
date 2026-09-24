@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Navbar from "@/components/Navbar";
-import StyledIMowiT from "@/components/StyledIMowiT";
+import MarketingFooter from "@/components/MarketingFooter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +24,7 @@ export default function RootLayout({
         <main className="flex-1">
           {children}
         </main>
-        <footer className="bg-[#F5F5F5] text-[#333333] py-8">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p className="text-sm">© 2026 <StyledIMowiT />. All rights reserved.</p>
-          </div>
-        </footer>
+        <MarketingFooter />
       </body>
     </html>
   );
