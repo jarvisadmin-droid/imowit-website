@@ -107,7 +107,7 @@ export async function submitInquiry(
     return failed(formData, "Sorry, the form isn't working right now. Please try again later.");
   }
 
-  const { data: inquiryId, error } = await supabase.rpc("submit_inquiry", {
+  const { data: inquiryId, error, status } = await supabase.rpc("submit_inquiry", {
     p_inquiry_type: inquiryType,
     p_first_name: firstName,
     p_last_name: lastName,
@@ -125,7 +125,13 @@ export async function submitInquiry(
         "We've received several messages from this email address. Please try again later.",
       );
     }
-    console.error("submit_inquiry failed", error.code);
+    // Status, code and message identify the cause (e.g. 401 "Invalid API key"
+    // from the API gateway has no code). None of them contain the key.
+    console.error(
+      `submit_inquiry failed status=${status} code=${error.code || "none"} message=${JSON.stringify(
+        (error.message ?? "").slice(0, 200),
+      )}`,
+    );
     return failed(formData, "Sorry, something went wrong. Please try again.");
   }
 
