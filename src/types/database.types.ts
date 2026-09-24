@@ -452,6 +452,7 @@ export type Database = {
           account_type: Database["public"]["Enums"]["account_type"]
           affiliated_organization_id: string | null
           billing_email: string | null
+          company_name: string | null
           created_at: string
           deleted_at: string | null
           id: string
@@ -465,6 +466,7 @@ export type Database = {
           account_type?: Database["public"]["Enums"]["account_type"]
           affiliated_organization_id?: string | null
           billing_email?: string | null
+          company_name?: string | null
           created_at?: string
           deleted_at?: string | null
           id?: string
@@ -478,6 +480,7 @@ export type Database = {
           account_type?: Database["public"]["Enums"]["account_type"]
           affiliated_organization_id?: string | null
           billing_email?: string | null
+          company_name?: string | null
           created_at?: string
           deleted_at?: string | null
           id?: string
@@ -1193,7 +1196,9 @@ export type Database = {
           deleted_at: string | null
           id: string
           latitude: number | null
+          location_name: string | null
           longitude: number | null
+          place_id: string | null
           postal_code: string
           property_type: Database["public"]["Enums"]["property_type"]
           state: string
@@ -1210,7 +1215,9 @@ export type Database = {
           deleted_at?: string | null
           id?: string
           latitude?: number | null
+          location_name?: string | null
           longitude?: number | null
+          place_id?: string | null
           postal_code: string
           property_type?: Database["public"]["Enums"]["property_type"]
           state: string
@@ -1227,7 +1234,9 @@ export type Database = {
           deleted_at?: string | null
           id?: string
           latitude?: number | null
+          location_name?: string | null
           longitude?: number | null
+          place_id?: string | null
           postal_code?: string
           property_type?: Database["public"]["Enums"]["property_type"]
           state?: string
@@ -1255,6 +1264,7 @@ export type Database = {
           estimated_by: string | null
           id: string
           property_id: string | null
+          request_type: Database["public"]["Enums"]["quote_request_type"]
           requested_by: string
           responded_at: string | null
           resulting_work_order_id: string | null
@@ -1272,6 +1282,7 @@ export type Database = {
           estimated_by?: string | null
           id?: string
           property_id?: string | null
+          request_type?: Database["public"]["Enums"]["quote_request_type"]
           requested_by: string
           responded_at?: string | null
           resulting_work_order_id?: string | null
@@ -1289,6 +1300,7 @@ export type Database = {
           estimated_by?: string | null
           id?: string
           property_id?: string | null
+          request_type?: Database["public"]["Enums"]["quote_request_type"]
           requested_by?: string
           responded_at?: string | null
           resulting_work_order_id?: string | null
@@ -1595,12 +1607,33 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      current_app_role: { Args: never; Returns: string }
       generate_scheduled_work_orders: { Args: never; Returns: undefined }
       is_admin: { Args: never; Returns: boolean }
       is_contractor: { Args: never; Returns: boolean }
       is_trusted_backend: { Args: never; Returns: boolean }
       owns_contractor_account: { Args: { target_id: string }; Returns: boolean }
       owns_customer_account: { Args: { target_id: string }; Returns: boolean }
+      request_property_assessment: {
+        Args: {
+          p_access_notes?: string
+          p_address_line1: string
+          p_address_line2: string
+          p_city: string
+          p_company_name?: string
+          p_latitude: number
+          p_location_name?: string
+          p_longitude: number
+          p_place_id: string
+          p_postal_code: string
+          p_property_type: Database["public"]["Enums"]["property_type"]
+          p_state: string
+        }
+        Returns: {
+          out_property_id: string
+          out_quote_request_id: string
+        }[]
+      }
     }
     Enums: {
       account_status: "active" | "inactive" | "archived"
@@ -1638,6 +1671,7 @@ export type Database = {
       payment_status: "pending" | "succeeded" | "failed" | "refunded"
       plan_type: "rental_no_ownership" | "rental_with_purchase_option"
       property_type: "residential" | "commercial"
+      quote_request_type: "plan_assessment" | "service_quote"
       quote_status: "pending" | "estimated" | "sent" | "accepted" | "declined"
       rate_type: "hourly" | "per_job" | "per_visit"
       schedule_frequency:
@@ -1838,6 +1872,7 @@ export const Constants = {
       payment_status: ["pending", "succeeded", "failed", "refunded"],
       plan_type: ["rental_no_ownership", "rental_with_purchase_option"],
       property_type: ["residential", "commercial"],
+      quote_request_type: ["plan_assessment", "service_quote"],
       quote_status: ["pending", "estimated", "sent", "accepted", "declined"],
       rate_type: ["hourly", "per_job", "per_visit"],
       schedule_frequency: [
