@@ -67,7 +67,7 @@ export default function Subcontractors() {
         {/* Application Form */}
         <div className="max-w-2xl mx-auto">
           <h2 className="text-2xl font-bold text-[#001F51] mb-8 text-center">Apply Now</h2>
-          <form className="space-y-6">
+          <form method="post" className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">

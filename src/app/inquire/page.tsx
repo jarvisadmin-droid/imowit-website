@@ -11,7 +11,7 @@ export default function Inquire() {
           Interested in <StyledIMowiT /> autonomous mowing services? We'd love to hear from you.
         </p>
 
-        <form className="space-y-6">
+        <form method="post" className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
