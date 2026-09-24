@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { turnstileSiteKey } from "@/lib/env";
 
 // Cloudflare Turnstile widget. Rendered explicitly (not via Cloudflare's
 // automatic scan) so it also works after client-side navigation. The widget
@@ -42,7 +43,7 @@ function loadScript(): Promise<void> {
 export default function Turnstile({ resetSignal }: { resetSignal: unknown }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const siteKey = turnstileSiteKey();
 
   useEffect(() => {
     if (!siteKey) return;

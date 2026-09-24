@@ -1,4 +1,5 @@
 import "server-only";
+import { resendApiKey } from "@/lib/env.server";
 
 // Minimal Resend client (REST API; no SDK dependency). Uses the website's
 // sending-only key, RESEND_API_KEY, restricted to imowit.com. This is separate
@@ -10,7 +11,7 @@ export async function sendEmail(message: {
   text: string;
   replyTo?: string;
 }): Promise<boolean> {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = resendApiKey();
   if (!apiKey) {
     console.error("RESEND_API_KEY is not set; email not sent");
     return false;

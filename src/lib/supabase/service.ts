@@ -1,6 +1,8 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database.types";
+import { supabaseUrl } from "@/lib/env";
+import { supabaseServiceRoleKey } from "@/lib/env.server";
 
 // Service-role Supabase client: bypasses RLS and can do anything, so it is
 // server-only and should be used as narrowly as possible. Today its only use
@@ -9,8 +11,8 @@ import type { Database } from "@/types/database.types";
 // supabase/migrations/20260924090000_inquiries.sql). Returns null when the key
 // isn't configured, so callers can fail closed.
 export function createServiceClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const url = supabaseUrl();
+  const key = supabaseServiceRoleKey();
   if (!url || !key) {
     console.error("SUPABASE_SERVICE_ROLE_KEY or NEXT_PUBLIC_SUPABASE_URL is not set");
     return null;

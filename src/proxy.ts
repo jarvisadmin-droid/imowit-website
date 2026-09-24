@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
+import { supabaseAnonKey, supabaseUrl } from "@/lib/env";
 
 const ADMIN_HOSTNAMES = new Set(["admin.imowit.com"]);
 
@@ -38,11 +39,20 @@ async function adminProxy(request: NextRequest): Promise<NextResponse> {
   const target = request.nextUrl.clone();
   target.pathname = pathname === "/" ? "/admin" : `/admin${pathname}`;
 
+  const url = supabaseUrl();
+  const anonKey = supabaseAnonKey();
+  if (!url || !anonKey) {
+    console.error("admin proxy: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY is not set");
+    return withAdminHeaders(
+      new NextResponse("Admin sign-in is temporarily unavailable.", { status: 503 }),
+    );
+  }
+
   let response = NextResponse.rewrite(target, { request });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    anonKey,
     {
       cookies: {
         getAll() {
