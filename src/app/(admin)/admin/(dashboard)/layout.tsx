@@ -16,7 +16,10 @@ export default async function DashboardLayout({
     <div className="min-h-screen flex flex-col">
       <header className="bg-[#001F51] text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
-          <Link href="/" className="font-semibold">iMowiT Admin</Link>
+          <nav className="flex items-center gap-6">
+            <Link href="/" className="font-semibold">iMowiT Admin</Link>
+            <Link href="/inquiries" className="text-sm hover:text-[#56C70B]">Inquiries</Link>
+          </nav>
           <div className="flex items-center gap-4 text-sm">
             <span>
               {displayName} <span className="text-white/60">· {adminRole.replace("_", " ")}</span>
