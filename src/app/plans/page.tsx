@@ -23,7 +23,7 @@ export default function Plans() {
                 OUR PLANS
               </span>
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
-                Choose the Autonomous<br/>Mowing Solution That's<br/>Right for You
+                Choose the Autonomous<br/>Mowing Solution That&apos;s<br/>Right for You
               </h1>
               <div className="w-12 h-0.5 bg-[#56C70B] mb-4"></div>
               <p className="text-white text-sm md:text-base leading-relaxed max-w-lg">

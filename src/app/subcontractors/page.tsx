@@ -39,7 +39,7 @@ export default function Subcontractors() {
           <div className="grid md:grid-cols-2 gap-6">
             <div className="flex items-start">
               <span className="text-[#56C70B] mr-3">✓</span>
-              <span className="text-gray-700">Valid driver's license and reliable transportation</span>
+              <span className="text-gray-700">Valid driver&apos;s license and reliable transportation</span>
             </div>
             <div className="flex items-start">
               <span className="text-[#56C70B] mr-3">✓</span>

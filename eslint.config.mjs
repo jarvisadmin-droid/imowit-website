@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Archived copies of earlier site versions; not part of the build.
+    "backups/**",
     // Supabase edge functions run on Deno; checked with `deno check`/`deno lint`.
     "supabase/functions/**",
   ]),
