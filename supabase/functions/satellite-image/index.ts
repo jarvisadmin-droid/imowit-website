@@ -14,10 +14,10 @@
 import { requireCustomer } from "../_shared/auth.ts";
 import { error, requireEnv, UPSTREAM_TIMEOUT_MS } from "../_shared/http.ts";
 import { signUrlPath as sign } from "../_shared/url-signing.ts";
+import { parseCenter } from "./center.ts";
 
 const STATIC_MAPS_ORIGIN = "https://maps.googleapis.com";
 const STATIC_MAPS_PATH = "/maps/api/staticmap";
-const COORD_RE = /^-?\d{1,3}(\.\d{1,10})?$/;
 // Our cap on how long the app may cache an image, even if Google allows longer.
 const MAX_CACHE_SECONDS = 86400;
 
@@ -82,38 +82,6 @@ Deno.serve(async (req) => {
     },
   });
 });
-
-// Returns the Static Maps `center` value, or a 400 Response.
-function parseCenter(query: URLSearchParams): string | Response {
-  const lat = query.get("lat");
-  const lng = query.get("lng");
-  const address = query.get("address");
-  const hasCoords = lat !== null || lng !== null;
-
-  if (hasCoords === (address !== null)) {
-    return error(400, "provide_coordinates_or_address");
-  }
-
-  if (hasCoords) {
-    if (lat === null || lng === null || !COORD_RE.test(lat) || !COORD_RE.test(lng)) {
-      return error(400, "invalid_coordinates");
-    }
-    const latN = Number(lat);
-    const lngN = Number(lng);
-    // Roughly the US, including Alaska, Hawaii and Puerto Rico.
-    if (latN < 17 || latN > 72 || lngN < -180 || lngN > -64) {
-      return error(400, "invalid_coordinates");
-    }
-    return `${latN},${lngN}`;
-  }
-
-  const trimmed = address!.trim();
-  // deno-lint-ignore no-control-regex
-  if (trimmed.length < 3 || trimmed.length > 300 || /[\u0000-\u001f\u007f|]/.test(trimmed)) {
-    return error(400, "invalid_address");
-  }
-  return trimmed;
-}
 
 // Follow Google's own cache header: the app may cache the image privately for
 // as long as Google allows, capped at a day, and not at all if Google gives no
